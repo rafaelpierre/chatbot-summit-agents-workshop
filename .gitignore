@@ -1,0 +1,5 @@
+.specstory
+.env
+.venv
+.ruff_cache
+__pycache__
