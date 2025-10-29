@@ -1,8 +1,11 @@
-from agents import Runner, SQLiteSession
+from agents import Runner, SQLiteSession, TContext
 from src.agent.intent import intent_agent
 from src.agent.profiler import loan_profiler_agent, LoanClassification
+from src.agent.evaluator import product_evaluator_agent, LoanProduct
+from src.agent.context import ConversationContext
 import asyncio
 from uuid import uuid4
+from textwrap import dedent
 
 session = SQLiteSession(
     session_id=str(uuid4()),
@@ -12,34 +15,46 @@ session = SQLiteSession(
 
 async def run():
 
+    # Context
+
+    context = ConversationContext()
+
     # Handoffs
 
+    loan_profiler_agent.handoffs = [product_evaluator_agent]
     intent_agent.handoffs = [loan_profiler_agent]
-    loan_profiler_agent.handoffs = [intent_agent]
 
-    # Agentic loop
+    current_agent = intent_agent
+    agent_message = "Hi, how can I help you today?"
 
-    num_turns = 0
-    max_turns = 10
 
-    while num_turns < max_turns:
-
-        if num_turns == 0:
-            agent_message = "Hi, how can I assist you today?"
-            current_agent = intent_agent
+    while True:
 
         print(agent_message)
-        prompt = input("Answer: ")
-        result = await Runner.run(current_agent, prompt, session=session)
+        prompt = input("Enter your message: ")
+        result = await Runner.run(
+            starting_agent=current_agent,
+            input=prompt,
+            context=context,
+            session=session
+        )
+
+        current_agent = result.last_agent
+        print(f"Current agent: {current_agent.name}")
         
         if isinstance(result.final_output, LoanClassification):
+            handover_message = "Thanks. Let me handover to our Product Evaluator agent..."
+            agent_message = result.final_output.next_question or handover_message
+            
+        elif isinstance(result.final_output, LoanProduct):
 
-            agent_message = result.final_output.next_question
-            if not agent_message:
-                print("Thank you for the information. Based on your responses, we have classified your loan needs.")
-                return 0
-        
-        num_turns += 1
+            product_tier = result.final_output.product_tier
+            agent_message = dedent(f"""
+                Thanks! Your product classification is {product_tier}.\n
+                A human agent will get in touch with you shortly.
+            """)
+
+            return 0
 
 
 if __name__ == "__main__":

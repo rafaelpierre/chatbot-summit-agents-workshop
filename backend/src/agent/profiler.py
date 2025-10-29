@@ -6,6 +6,7 @@ from typing import Literal
 
 from src.models.completions import get_completions_model
 from src.guardrails.input_guardrails import check_user_input
+from src.agent.context import ConversationContext
 
 
 class LoanClassification(BaseModel):
@@ -44,7 +45,7 @@ class LoanClassification(BaseModel):
     next_question: str | None = None
 
 
-loan_profiler_agent = Agent(
+loan_profiler_agent = Agent[ConversationContext](
     name="Loan Profiler Agent",
     instructions=dedent(f"""
         {RECOMMENDED_PROMPT_PREFIX}
@@ -70,7 +71,9 @@ loan_profiler_agent = Agent(
         credit_score: The credit score range of the user.
         collateral: Whether the user has collateral to offer.
         reasoning: Your explanation on why you classified the loan in this way.
-        next_question: If you need more information to complete the classification, provide the next question to ask the user. If you have all the information, set this to null.
+        next_question: If you need more information to complete the classification, provide the next question to ask the user.
+        
+        If you have all the information, hand over to the product_evaluator_agent.
     """),
     model=get_completions_model(model="gpt-4.1"),
     model_settings=ModelSettings(temperature=0.1, max_tokens=500),

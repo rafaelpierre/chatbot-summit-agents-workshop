@@ -1,9 +1,11 @@
 from agents import Agent, ModelSettings
 from src.models.completions import get_completions_model
+from src.guardrails.input_guardrails import check_user_input
+from src.agent.context import ConversationContext
 from textwrap import dedent
 
 
-intent_agent = Agent(
+intent_agent = Agent[ConversationContext](
     name="Intent Investigation Agent",
     instructions=dedent("""
         Your job is to analyze user intents based on their input queries.
@@ -12,5 +14,6 @@ intent_agent = Agent(
         If not, respond politely indicating that you cannot assist with non-loan related queries.
     """),
     model=get_completions_model(model="gpt-4.1"),
-    model_settings=ModelSettings(temperature=0.1, max_tokens=100)
+    model_settings=ModelSettings(temperature=0.1, max_tokens=100),
+    input_guardrails=[check_user_input]
 )

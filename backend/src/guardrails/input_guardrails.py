@@ -1,5 +1,6 @@
 from agents import (
     Agent,
+    Runner,
     ModelSettings,
     input_guardrail,
     GuardrailFunctionOutput,
@@ -37,7 +38,7 @@ input_guardrail_agent = Agent(
 async def check_user_input(
     ctx: RunContextWrapper[None], agent: Agent, input: str | list[TResponseInputItem]
 ) -> InputGuardrailSchema:
-    result = await input_guardrail_agent.run(
+    result = await Runner.run(
         input_guardrail_agent, input, context=ctx.context
     )
 
