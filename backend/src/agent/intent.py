@@ -12,5 +12,5 @@ intent_agent = Agent(
         If not, respond politely indicating that you cannot assist with non-loan related queries.
     """),
     model=get_completions_model(model="gpt-4.1"),
-    model_settings=ModelSettings(temperature=0.1, max_tokens=100),
+    model_settings=ModelSettings(temperature=0.1, max_tokens=100)
 )
