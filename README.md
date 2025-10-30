@@ -1,5 +1,11 @@
 ## Loan Originator Agent
 
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI_Agents_SDK-412991?style=for-the-badge&logo=openai&logoColor=white)
+![Ruff](https://img.shields.io/badge/Ruff-D7FF64?style=for-the-badge&logo=ruff&logoColor=black)
+![Phoenix](https://img.shields.io/badge/Phoenix_Arize-FF6B35?style=for-the-badge&logo=phoenix-framework&logoColor=white)
+![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-000000?style=for-the-badge&logo=opentelemetry&logoColor=white)
+
 This project implements a Loan Originator Agent using OpenAI's GPT-4.1 model to evaluate user intents and recommend suitable loan products based on their financial needs. The agent is designed to interact with users, understand their requirements, and provide tailored loan options.
 
 ### Project Structure
