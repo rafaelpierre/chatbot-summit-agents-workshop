@@ -1,17 +1,31 @@
-from agents import Runner, SQLiteSession, TContext
+from agents import Runner, SQLiteSession
+import asyncio
+from phoenix.otel import register
+from uuid import uuid4
+from textwrap import dedent
+from dotenv import load_dotenv
+
 from src.agent.intent import intent_agent
 from src.agent.profiler import loan_profiler_agent, LoanClassification
 from src.agent.evaluator import product_evaluator_agent, LoanProduct
 from src.agent.context import ConversationContext
-import asyncio
-from uuid import uuid4
-from textwrap import dedent
+
+load_dotenv()
 
 session = SQLiteSession(
     session_id=str(uuid4()),
     db_path=":memory:"
 )
 
+"""
+tracer_provider = register(
+    project_name="<YOUR_PROJECT_NAME>", auto_instrument=True
+)
+"""
+
+tracer_provider = register(
+    project_name="loan-originator", auto_instrument=True
+)
 
 async def run():
 
