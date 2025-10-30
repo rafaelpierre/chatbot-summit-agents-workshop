@@ -70,6 +70,8 @@ async def run():
 
             # End the conversation
             return 0
+        else:
+            print(result.final_output)
 
 
 if __name__ == "__main__":

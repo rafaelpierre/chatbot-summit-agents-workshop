@@ -25,3 +25,11 @@ You can find the instructions to set up here: [Vibe to Live: Build and Deploy Ag
     cd backend
     uv run src/services/chat_service.py
     ```
+
+### Questions to explore
+
+* Have a chat with the Loan Originator Agent and test its responses to various loan requests.
+* What happens when you ask for products that are not related to loans? E.g. credit cards
+* What happens when you ask a question unrelated to financial products? E.g. "What's the weather like today?"
+* What happens when you ask the current agent to hand over to the `Product Evaluator Agent`?
+* How do we know the agent inputs, outputs, and which agent handed over control to which other agent?
