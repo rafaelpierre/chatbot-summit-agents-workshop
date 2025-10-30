@@ -6,7 +6,9 @@ This project implements a Loan Originator Agent using OpenAI's GPT-4.1 model to 
 
 You can find the instructions to set up here: [Vibe to Live: Build and Deploy Agent AI Products](https://wood-farmhouse-ac7.notion.site/Vibe-to-Live-Build-and-Deploy-Agent-AI-Products-29c77f1588908055ab3adb5d67e6f713)
 
-#### Running this code
+### Running this code
+
+#### Quickstart
 
 * Using Github Codespaces (recommended)
     * Fork this repo
@@ -18,3 +20,8 @@ You can find the instructions to set up here: [Vibe to Live: Build and Deploy Ag
     * Clone this repo
     * Open the cloned repo in VS Code
     * Reopen the project in a container when prompted
+* Run the app using `uv`:
+    ```bash
+    cd backend
+    uv run src/services/chat_service.py
+    ```
