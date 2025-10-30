@@ -38,9 +38,7 @@ input_guardrail_agent = Agent(
 async def check_user_input(
     ctx: RunContextWrapper[None], agent: Agent, input: str | list[TResponseInputItem]
 ) -> InputGuardrailSchema:
-    result = await Runner.run(
-        input_guardrail_agent, input, context=ctx.context
-    )
+    result = await Runner.run(input_guardrail_agent, input, context=ctx.context)
 
     return GuardrailFunctionOutput(
         output_info=result.final_output,

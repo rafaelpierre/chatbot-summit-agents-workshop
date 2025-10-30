@@ -17,13 +17,8 @@ class LoanProduct(BaseModel):
         reasoning: Agent's reasoning behind the decision.
     """
 
-    product_tier: Literal[
-        "bronze",
-        "silver",
-        "gold"
-    ]
+    product_tier: Literal["bronze", "silver", "gold"]
     reasoning: str
-
 
 
 product_evaluator_agent = Agent[ConversationContext](
@@ -50,5 +45,5 @@ product_evaluator_agent = Agent[ConversationContext](
     model=get_completions_model(model="gpt-4.1"),
     model_settings=ModelSettings(temperature=0.1, max_tokens=500),
     output_type=LoanProduct,
-    input_guardrails=[check_user_input]
+    input_guardrails=[check_user_input],
 )

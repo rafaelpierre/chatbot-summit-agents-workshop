@@ -11,10 +11,10 @@ from src.agent.context import ConversationContext
 
 class LoanClassification(BaseModel):
     """
-    
+
     Schema for classifying loan details based on user responses.
 
-    Attributes: 
+    Attributes:
         purpose: The purpose of the loan.
         amount: The desired loan amount.
         term: The preferred loan term.
@@ -29,17 +29,11 @@ class LoanClassification(BaseModel):
         "debt_consolidation",
         "business_investment",
         "education",
-        "unknown"
+        "unknown",
     ]
     amount: float
     term: int
-    credit_score: Literal[
-        "excellent",
-        "good",
-        "fair",
-        "poor",
-        "unknown"
-    ]
+    credit_score: Literal["excellent", "good", "fair", "poor", "unknown"]
     collateral: bool
     reasoning: str
     next_question: str | None = None
@@ -78,5 +72,5 @@ loan_profiler_agent = Agent[ConversationContext](
     model=get_completions_model(model="gpt-4.1"),
     model_settings=ModelSettings(temperature=0.1, max_tokens=500),
     output_type=LoanClassification,
-    input_guardrails=[check_user_input]
+    input_guardrails=[check_user_input],
 )

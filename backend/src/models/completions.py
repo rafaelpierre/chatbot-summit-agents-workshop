@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 def get_completions_model(model: str = "gpt-4.1"):
     client = AsyncOpenAI()
 
