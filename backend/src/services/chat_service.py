@@ -18,14 +18,14 @@ session = SQLiteSession(
 )
 
 """
+
+Once you have setup PHOENIX_COLLECTOR_ENDPOINT and PHOENIX_API_KEY
+in your .env file, uncomment this
+
 tracer_provider = register(
     project_name="<YOUR_PROJECT_NAME>", auto_instrument=True
 )
 """
-
-tracer_provider = register(
-    project_name="loan-originator", auto_instrument=True
-)
 
 async def run():
 
